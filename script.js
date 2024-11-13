@@ -16,8 +16,8 @@ const transactionList = document.getElementById('transaction-list');
 
 // Initialize canvas for graph
 const ctx = priceGraph.getContext('2d');
-priceGraph.width = 500;
-priceGraph.height = 300;
+priceGraph.width = 500;  // Fixed width
+priceGraph.height = 300; // Fixed height
 
 // Load saved game state from localStorage
 function loadState() {
@@ -73,14 +73,15 @@ function drawGraph() {
     const canvasWidth = priceHistory.length * 10;  // Horizontal expansion
     const canvasHeight = Math.max(300, (maxPrice - minPrice) * 2 + 20);  // Vertical expansion to fit the price range
 
-    priceGraph.width = canvasWidth;
-    priceGraph.height = canvasHeight;
+    // Set canvas size dynamically while keeping it within scrollable area
+    priceGraph.width = Math.max(500, canvasWidth); // Don't shrink below initial width
+    priceGraph.height = Math.max(300, canvasHeight); // Don't shrink below initial height
 
     // Draw the line
     ctx.beginPath();
-    ctx.moveTo(0, canvasHeight - (priceHistory[0] - minPrice) * 2);
+    ctx.moveTo(0, priceGraph.height - (priceHistory[0] - minPrice) * 2);
     for (let i = 1; i < priceHistory.length; i++) {
-        ctx.lineTo(i * 10, canvasHeight - (priceHistory[i] - minPrice) * 2);
+        ctx.lineTo(i * 10, priceGraph.height - (priceHistory[i] - minPrice) * 2);
     }
     ctx.strokeStyle = '#00ff00';
     ctx.stroke();
