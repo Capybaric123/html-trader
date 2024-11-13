@@ -8,16 +8,24 @@
 </head>
 <body>
     <div id="game-container">
-        <h1>Trading Game</h1>
-        <div id="balance">Balance: $10,000</div>
-        <div id="graph-container">
-            <canvas id="priceGraph"></canvas>
+        <div id="left-panel">
+            <h1>Trading Game</h1>
+            <div id="balance">Balance: $10,000</div>
+            <div id="transactions">
+                <h3>Transaction History</h3>
+                <div id="transaction-list"></div>
+            </div>
         </div>
-        <div id="controls">
-            <button id="buyBtn">Buy</button>
-            <button id="sellBtn">Sell</button>
-            <p>Price: $<span id="currentPrice">0</span></p>
-            <p>Your Holdings: <span id="holdings">0</span></p>
+        <div id="right-panel">
+            <div id="graph-container">
+                <canvas id="priceGraph"></canvas>
+            </div>
+            <div id="controls">
+                <button id="buyBtn">Buy</button>
+                <button id="sellBtn">Sell</button>
+                <p>Price: $<span id="currentPrice">0</span></p>
+                <p>Your Holdings: <span id="holdings">0</span></p>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
