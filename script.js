@@ -63,18 +63,31 @@ function updateTransactionHistory() {
     });
 }
 
-// Draw the price history graph
+// Draw the price history graph and update canvas size
 function drawGraph() {
     ctx.clearRect(0, 0, priceGraph.width, priceGraph.height);
+
+    const maxPrice = Math.max(...priceHistory);
+    const minPrice = Math.min(...priceHistory);
+
+    const canvasWidth = priceHistory.length * 10;  // Horizontal expansion
+    const canvasHeight = Math.max(300, (maxPrice - minPrice) * 2 + 20);  // Vertical expansion to fit the price range
+
+    priceGraph.width = canvasWidth;
+    priceGraph.height = canvasHeight;
+
+    // Draw the line
     ctx.beginPath();
-    ctx.moveTo(0, priceGraph.height - priceHistory[0] * 2);
+    ctx.moveTo(0, canvasHeight - (priceHistory[0] - minPrice) * 2);
     for (let i = 1; i < priceHistory.length; i++) {
-        ctx.lineTo(i * (priceGraph.width / priceHistory.length), priceGraph.height - priceHistory[i] * 2);
+        ctx.lineTo(i * 10, canvasHeight - (priceHistory[i] - minPrice) * 2);
     }
     ctx.strokeStyle = '#00ff00';
     ctx.stroke();
-    // Scroll the canvas to follow the latest point
+
+    // Scroll the canvas to the end (both horizontally and vertically)
     priceGraph.scrollLeft = priceGraph.scrollWidth;
+    priceGraph.scrollTop = priceGraph.scrollHeight;
 }
 
 // Generate random price fluctuation
@@ -82,7 +95,7 @@ function generatePrice() {
     const fluctuation = (Math.random() - 0.5) * 10; // Random fluctuation between -5 and +5
     currentPrice = Math.max(10, currentPrice + fluctuation); // Ensure the price doesn't go below $10
     priceHistory.push(currentPrice);
-    if (priceHistory.length > priceGraph.width / 2) {
+    if (priceHistory.length > priceGraph.width / 10) {
         priceHistory.shift(); // Remove old prices to keep the graph size constant
     }
     updateUI();
