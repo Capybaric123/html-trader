@@ -42,6 +42,8 @@ body {
 
 canvas {
     background-color: #222;
+    width: 500px;  /* Fixed width */
+    height: 300px; /* Fixed height */
 }
 
 #transactions {
