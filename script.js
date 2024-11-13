@@ -70,18 +70,18 @@ function drawGraph() {
     const maxPrice = Math.max(...priceHistory);
     const minPrice = Math.min(...priceHistory);
 
-    const canvasWidth = priceHistory.length * 10;  // Horizontal expansion
-    const canvasHeight = Math.max(300, (maxPrice - minPrice) * 2 + 20);  // Vertical expansion to fit the price range
+    const canvasWidth = priceHistory.length * 10;  // Horizontal expansion, stays zoomed in
+    const canvasHeight = Math.max(300, (maxPrice - minPrice) * 6 + 20);  // Vertical zoom for clearer lines
 
     // Set canvas size dynamically while keeping it within scrollable area
     priceGraph.width = Math.max(500, canvasWidth); // Don't shrink below initial width
     priceGraph.height = Math.max(300, canvasHeight); // Don't shrink below initial height
 
-    // Draw the line
+    // Draw the line with zoomed-in vertical scaling
     ctx.beginPath();
-    ctx.moveTo(0, priceGraph.height - (priceHistory[0] - minPrice) * 2);
+    ctx.moveTo(0, priceGraph.height - (priceHistory[0] - minPrice) * 6); // Zoom factor 6
     for (let i = 1; i < priceHistory.length; i++) {
-        ctx.lineTo(i * 10, priceGraph.height - (priceHistory[i] - minPrice) * 2);
+        ctx.lineTo(i * 10, priceGraph.height - (priceHistory[i] - minPrice) * 6); // Zoom factor 6
     }
     ctx.strokeStyle = '#00ff00';
     ctx.stroke();
